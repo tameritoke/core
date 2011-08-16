@@ -62,6 +62,7 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 			return $objTemplate->parse();
 		}
 		
+		$this->import('Isotope');
 		$this->import('IsotopeWishlist');
 		$this->IsotopeWishlist->initializeWishlist((int) $this->Isotope->Config->id, (int) $this->Isotope->Config->store_id);
 		

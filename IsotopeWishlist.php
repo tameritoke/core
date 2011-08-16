@@ -128,6 +128,21 @@ class IsotopeWishlist extends IsotopeProductCollection
 			$this->setCookie($this->strCookie, '', ($time - 3600), $GLOBALS['TL_CONFIG']['websitePath']);
  		}
 	}
+	
+	
+	public function addProduct(IsotopeProduct $objProduct, $intQuantity)
+	{
+		if (version_compare(ISO_VERSION, '1.3', '<'))
+		{
+			// Make sure collection is in DB before adding product
+			if (!$this->blnRecordExists)
+			{
+				$this->findBy('id', $this->save());
+			}
+		}
+		
+		return parent::addProduct($objProduct, $intQuantity);
+	}
 
 
 	public function getSurcharges()

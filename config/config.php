@@ -39,4 +39,5 @@ $GLOBALS['FE_MOD']['isotope']['iso_wishlistemail'] = 'ModuleIsotopeWishlistEmail
  * HOOKs
  */
 $GLOBALS['ISO_HOOKS']['buttons'][] = array('Wishlist', 'generateButton');
+$GLOBALS['TL_HOOKS']['isoButtons'][] = array('Wishlist', 'generateButton');
 
