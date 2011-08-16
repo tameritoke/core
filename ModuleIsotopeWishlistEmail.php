@@ -1,8 +1,8 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2011 Leo Feyer
+ * Copyright (C) 2005-2010 Leo Feyer
  *
  * Formerly known as TYPOlight Open Source CMS.
  *
@@ -10,32 +10,24 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Kamil Kuzminski 2011 
- * @author     Kamil Kuzminski <http://qzminski.com> 
- * @package    IsotopeWishlist 
- * @license    GNU/LGPL 
- * @filesource
+ * @copyright  Isotope eCommerce Workgroup 2009-2011
+ * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
+ * @author     Andreas Schempp <andreas@schempp.ch>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 
-/**
- * Class ModuleIsotopeWishlistEmail 
- *
- * @copyright  Kamil Kuzminski 2011 
- * @author     Kamil Kuzminski <http://qzminski.com> 
- * @package    Controller
- */
 class ModuleIsotopeWishlistEmail extends ModuleIsotope
 {
 
@@ -131,11 +123,10 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 			
 			$this->Isotope->sendMail($this->iso_mail_customer, $objForm->fetchSingle('email'), $this->language, $arrData);
 			
-			$this->jumpToOrReload($this->iso_wishlist_jumpTo);
+			$this->jumpToOrReload($this->jumpTo);
 		}
 		
 		$objForm->addFormToTemplate($this->Template);
 	}
 }
 
-?>
