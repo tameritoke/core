@@ -57,6 +57,12 @@ CREATE TABLE `tl_iso_wishlist_items` (
 -- 
 
 CREATE TABLE `tl_module` (
-  `iso_wishlist_jumpTo` int(10) unsigned NOT NULL default '0'
+  `iso_wishlist_jumpTo` int(10) unsigned NOT NULL default '0',
+  `iso_wishlist_form` int(10) unsigned NOT NULL default '0',
+  `iso_wishlist_recipient` varchar(255) NOT NULL default ''
+  `iso_wishlist_clearList` char(1) NOT NULL default '',
+  `iso_wishlist_definedRecipients` varchar(255) NOT NULL default '',
+  `iso_wishlist_recipientFromFormField` char(1) NOT NULL default '',
+  `iso_wishlist_formField` int(10) unsigned NOT NULL default '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

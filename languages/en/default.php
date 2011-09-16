@@ -24,6 +24,7 @@
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
  * @author     Andreas Schempp <andreas@schempp.ch>
+ * @author     Yanick Witschi <yanick.witschi@certo-net.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
@@ -33,11 +34,8 @@
  */
 $GLOBALS['TL_LANG']['MSC']['addedToWishlist']   = 'The select product has been added to your shopping wishlist.';
 $GLOBALS['TL_LANG']['MSC']['noItemsInWishlist'] = 'There are no items in your wishlist.';
-$GLOBALS['TL_LANG']['MSC']['wishlistSummary']   = 'Wishlist summary';
-$GLOBALS['TL_LANG']['MSC']['wishlistEmail']     = 'E-mail';
 $GLOBALS['TL_LANG']['MSC']['wishlistBT']        = 'Shopping Wishlist';
 $GLOBALS['TL_LANG']['MSC']['sendWishlistBT']    = 'Send Wishlist by e-mail';
-$GLOBALS['TL_LANG']['MSC']['sendWishlist']      = 'Send Wishlist';
 
  
 /**

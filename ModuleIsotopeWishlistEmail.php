@@ -24,6 +24,7 @@
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
  * @author     Andreas Schempp <andreas@schempp.ch>
+ * @author     Yanick Witschi <yanick.witschi@certo-net.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
@@ -53,7 +54,7 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 		if (TL_MODE == 'BE')
 		{
 			$objTemplate = new BackendTemplate('be_wildcard');
-			$objTemplate->wildcard = '### ISOTOPE ECOMMERCE: WISHLIST ###';
+			$objTemplate->wildcard = '### ISOTOPE ECOMMERCE: WISHLIST MAIL ###';
 			$objTemplate->title = $this->headline;
 			$objTemplate->id = $this->id;
 			$objTemplate->link = $this->name;
@@ -84,29 +85,10 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 			return;
 		}
 		
-		// Prepare fields
-		$arrFields = array
-		(
-			'email' => array
-			(
-				'name'      => 'email',
-				'label'     => $GLOBALS['TL_LANG']['MSC']['wishlistEmail'],
-				'inputType' => 'text',
-				'eval'      => array('mandatory'=>true, 'rgxp'=>'email')
-			)
-		);
-		
-		$objForm = new HasteForm($this->id, $arrFields);
-		$objForm->submit = $GLOBALS['TL_LANG']['MSC']['sendWishlist'];
-		
-		// Add captcha
-		if (!$this->disableCaptcha)
-		{
-			$objForm->addCaptcha();
-		}
+		$this->import('IsotopeFrontend');
+		$objForm = $this->IsotopeFrontend->prepareForm($this->iso_wishlist_form, 'iso_wishlist_' . $this->id);
 
-		// Send wishlist
-		if ($objForm->validate())
+		if($objForm->blnSubmitted && !$objForm->blnHasErrors)
 		{
 			$arrData = array
 			(
@@ -119,14 +101,54 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 				'grandTotal'	=> $this->Isotope->formatPriceWithCurrency($this->IsotopeWishlist->grandTotal, false),
 				'cart_text'		=> strip_tags($this->replaceInsertTags($this->IsotopeWishlist->getProducts('iso_products_text'))),
 				'cart_html'		=> $this->replaceInsertTags($this->IsotopeWishlist->getProducts('iso_products_html')),
-			);
+			);			
 			
-			$this->Isotope->sendMail($this->iso_mail_customer, $objForm->fetchSingle('email'), $this->language, $arrData);
+			// add custom form data
+			// fields
+			foreach ($objForm->arrFormData as $arrField)
+			{
+				$arrData['form_' . $arrField['name']] = $objForm->arrFields[$arrField['name']]->value;
+			}
+			
+			// uploads
+			foreach ($objForm->arrFiles as $name => $file)
+			{
+				$arrData['form_' . $arrField['name']] = $this->Environment->base . str_replace(TL_ROOT . '/', '', dirname($file['tmp_name'])) . '/' . rawurlencode($file['name']);
+			}
+
+			// recipients
+			$strRecipients = '';
+			if (strlen($this->iso_wishlist_definedRecipients))
+			{
+				$strRecipients .= $this->iso_wishlist_definedRecipients;
+			}
+			
+			// TODO: maybe we want to make more than one form field available?
+			if($this->iso_wishlist_recipientFromFormField)
+			{
+				$objFieldName = $this->Database->prepare("SELECT name FROM tl_form_field WHERE id=?")->limit(1)->execute($this->iso_wishlist_formField);
+				if($objFieldName->numRows)
+				{
+					$strRecipients .= ',' . $objForm->arrFields[$objFieldName->name]->value;
+				}
+				
+			}
+
+			$this->Isotope->sendMail($this->iso_mail_customer, $strRecipients, $this->language, $arrData);
+			
+			// clear the wishlist if activated in module settings
+			if ($this->iso_wishlist_clearList)
+			{
+				$this->IsotopeWishlist->delete();
+			}
 			
 			$this->jumpToOrReload($this->jumpTo);
 		}
-		
-		$objForm->addFormToTemplate($this->Template);
+
+		$this->Template->action		= $this->Environment->request;
+		$this->Template->fields		= $objForm->arrFields;
+		$this->Template->formId		= 'iso_wishlist_' . $this->id;
+		$this->Template->hasError	= $objForm->blnHasErrors;
 	}
 }
 

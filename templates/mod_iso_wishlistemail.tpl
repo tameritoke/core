@@ -19,17 +19,14 @@
 <div class="formbody">
 <input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formId; ?>" />
 <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<?php foreach($this->fields as $objWidget): ?>
 <div class="widget">
-	<?php echo $this->fields['email']->generateLabel(); ?> <?php echo $this->fields['email']->generateWithError(); ?> 
+	<?php if($objWidget->inputType == 'captcha'): ?>
+	<?php echo $objWidget->generateLabel(); ?> <?php echo $objWidget->generateWithError(); ?> <?php echo $objWidget->generateQuestion(); ?>
+	<?php continue; endif; ?>
+	<?php echo $objWidget->generateLabel(); ?> <?php echo $objWidget->generateWithError(); ?>
 </div>
-<?php if (isset($this->fields['captcha'])): ?>
-<div class="widget">
-	<?php echo $this->fields['captcha']->generateWithError(); ?> <label for="ctrl_captcha"><?php echo $this->fields['captcha']->generateQuestion(); ?><span class="mandatory">*</span></label>
-</div>
-<?php endif; ?>
-<div class="submit_container">
-  <input type="submit" class="submit" value="<?php echo $this->submit; ?>" />
-</div>
+<?php endforeach; ?>
 </div>
 </form>
 

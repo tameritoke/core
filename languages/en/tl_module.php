@@ -24,6 +24,7 @@
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
  * @author     Andreas Schempp <andreas@schempp.ch>
+ * @author     Yanick Witschi <yanick.witschi@certo-net.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
@@ -31,5 +32,9 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_module']['iso_wishlist_jumpTo'] = array('Shopping Wishlist Jump to page', 'This setting defines to which page a user will be redirected when requesting a form to send his wishlist by e-mail.');
-
+$GLOBALS['TL_LANG']['tl_module']['iso_wishlist_jumpTo'] 				= array('Shopping Wishlist Jump to page', 'This setting defines to which page a user will be redirected when requesting a form to send his wishlist by e-mail.');
+$GLOBALS['TL_LANG']['tl_module']['iso_wishlist_form'] 					= array('Form', 'Choose the form you would like to display.');
+$GLOBALS['TL_LANG']['tl_module']['iso_wishlist_clearList'] 				= array('Clear the wishlist after the e-mail has been sent', 'Activate this checkbox if you would like to delete the wishlist after the e-mail has been sent.');
+$GLOBALS['TL_LANG']['tl_module']['iso_wishlist_definedRecipients'] 		= array('List of recipients', 'Enter a comma-separated list of e-mail addresses. Leave the field empty if you don\'t want to add recipients.');
+$GLOBALS['TL_LANG']['tl_module']['iso_wishlist_recipientFromFormField'] = array('Send the e-mail to an address entered in the form', 'Activate this checkbox to choose the form field containing the e-mail address.');
+$GLOBALS['TL_LANG']['tl_module']['iso_wishlist_formField'] 				= array('e-mail form fields', 'You can only choose form fields validating for a correct e-mail address.');
