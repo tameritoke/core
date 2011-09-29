@@ -22,7 +22,7 @@
  *
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
- * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
+ * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -44,7 +44,7 @@ class Wishlist extends Frontend
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		if (TL_MODE == 'FE')
 		{
 			$this->import('Isotope');
@@ -53,7 +53,7 @@ class Wishlist extends Frontend
 		}
 	}
 
-	
+
 	/**
 	 * Generate a wishlist button
 	 * @param array
@@ -65,10 +65,10 @@ class Wishlist extends Frontend
 			'label' => $GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_wishlist'],
 			'callback' => array('Wishlist', 'addToWishlist')
 		);
-		
+
 		return $arrButtons;
 	}
-	
+
 
 	/**
 	 * Adds a particular product to wishlist

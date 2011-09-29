@@ -22,7 +22,7 @@
  *
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
- * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
+ * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -33,8 +33,8 @@
  */
 $GLOBALS['FE_MOD']['isotope']['iso_wishlist']      = 'ModuleIsotopeWishlist';
 $GLOBALS['FE_MOD']['isotope']['iso_wishlistemail'] = 'ModuleIsotopeWishlistEmail';
- 
- 
+
+
 /**
  * HOOKs
  */

@@ -22,7 +22,7 @@
  *
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
- * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
+ * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -36,40 +36,40 @@ class IsotopeWishlist extends IsotopeProductCollection
 	 * @var string
 	 */
 	protected $strHash = '';
-	
+
 	/**
 	 * Name of the current table
 	 * @var string
 	 */
 	protected $strTable = 'tl_iso_wishlist';
-	
+
 	/**
 	 * Name of the child table
 	 * @var string
 	 */
 	protected $ctable = 'tl_iso_wishlist_items';
-	
+
 	/**
 	 * Name of the temporary wishlist cookie
 	 * @var string
 	 */
 	protected $strCookie = 'ISOTOPE_TEMP_WISHLIST';
 
-	
+
 	/**
 	 * Import a front end user object
 	 */
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		if (FE_USER_LOGGED_IN)
 		{
 			$this->import('FrontendUser', 'User');
 		}
 	}
-	
-	
+
+
 	/**
 	 * Load current wishlist
 	 * @param integer
@@ -117,7 +117,7 @@ class IsotopeWishlist extends IsotopeProductCollection
  		if (FE_USER_LOGGED_IN && strlen($this->strHash))
  		{
 			$objWishlist = new IsotopeWishlist();
-			
+
 			if ($objWishlist->findBy('session', $this->strHash))
 			{
 				$this->transferFromCollection($objWishlist, false);
@@ -128,8 +128,8 @@ class IsotopeWishlist extends IsotopeProductCollection
 			$this->setCookie($this->strCookie, '', ($time - 3600), $GLOBALS['TL_CONFIG']['websitePath']);
  		}
 	}
-	
-	
+
+
 	public function addProduct(IsotopeProduct $objProduct, $intQuantity)
 	{
 		if (version_compare(ISO_VERSION, '1.3', '<'))
@@ -140,7 +140,7 @@ class IsotopeWishlist extends IsotopeProductCollection
 				$this->findBy('id', $this->save());
 			}
 		}
-		
+
 		return parent::addProduct($objProduct, $intQuantity);
 	}
 

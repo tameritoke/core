@@ -22,7 +22,7 @@
  *
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
- * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
+ * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
@@ -61,11 +61,11 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 
 			return $objTemplate->parse();
 		}
-		
+
 		$this->import('Isotope');
 		$this->import('IsotopeWishlist');
 		$this->IsotopeWishlist->initializeWishlist((int) $this->Isotope->Config->id, (int) $this->Isotope->Config->store_id);
-		
+
 		return parent::generate();
 	}
 

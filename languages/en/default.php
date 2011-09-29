@@ -22,7 +22,7 @@
  *
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
- * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com> 
+ * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @author     Yanick Witschi <yanick.witschi@certo-net.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
@@ -37,7 +37,7 @@ $GLOBALS['TL_LANG']['MSC']['noItemsInWishlist'] = 'There are no items in your wi
 $GLOBALS['TL_LANG']['MSC']['wishlistBT']        = 'Shopping Wishlist';
 $GLOBALS['TL_LANG']['MSC']['sendWishlistBT']    = 'Send Wishlist by e-mail';
 
- 
+
 /**
  * Buttons
  */
