@@ -24,6 +24,7 @@
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
+ * @author     Yanick Witschi <yanick.witschi@certo-net.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
@@ -147,7 +148,120 @@ class IsotopeWishlist extends IsotopeProductCollection
 
 	public function getSurcharges()
 	{
-		return array();
+		if (isset($this->arrCache['surcharges']))
+			return $this->arrCache['surcharges'];
+
+		$this->import('Isotope');
+
+		$arrPreTax = $arrPostTax = $arrTaxes = array();
+
+		$arrSurcharges = array();
+		if (isset($GLOBALS['ISO_HOOKS']['checkoutSurcharge']) && is_array($GLOBALS['ISO_HOOKS']['checkoutSurcharge']))
+		{
+			foreach ($GLOBALS['ISO_HOOKS']['checkoutSurcharge'] as $callback)
+			{
+				$this->import($callback[0]);
+				$arrSurcharges = $this->{$callback[0]}->{$callback[1]}($arrSurcharges);
+			}
+		}
+
+		foreach( $arrSurcharges as $arrSurcharge )
+		{
+			if ($arrSurcharge['before_tax'])
+			{
+				$arrPreTax[] = $arrSurcharge;
+			}
+			else
+			{
+				$arrPostTax[] = $arrSurcharge;
+			}
+		}
+
+		$arrProducts = $this->getProducts();
+		foreach( $arrProducts as $pid => $objProduct )
+		{
+			$fltPrice = $objProduct->tax_free_total_price;
+			foreach( $arrPreTax as $tax )
+			{
+				if (isset($tax['products'][$objProduct->cart_id]))
+				{
+					$fltPrice += $tax['products'][$objProduct->cart_id];
+				}
+			}
+
+			$arrTaxIds = array();
+			$arrTax = $this->Isotope->calculateTax($objProduct->tax_class, $fltPrice);
+
+			if (is_array($arrTax))
+			{
+				foreach ($arrTax as $k => $tax)
+				{
+					if (array_key_exists($k, $arrTaxes))
+					{
+						$arrTaxes[$k]['total_price'] += $tax['total_price'];
+
+						if (is_numeric($arrTaxes[$k]['price']) && is_numeric($tax['price']))
+						{
+							$arrTaxes[$k]['price'] += $tax['price'];
+						}
+					}
+					else
+					{
+						$arrTaxes[$k] = $tax;
+					}
+
+					$taxId = array_search($k, array_keys($arrTaxes)) + 1;
+					$arrTaxes[$k]['tax_id'] = $taxId;
+					$arrTaxIds[] = $taxId;
+				}
+			}
+
+
+			$strTaxId = implode(',', $arrTaxIds);
+			if ($objProduct->tax_id != $strTaxId)
+			{
+				$this->updateProduct($objProduct, array('tax_id'=>$strTaxId));
+			}
+		}
+
+
+		foreach( $arrPreTax as $i => $arrSurcharge )
+		{
+			if (!$arrSurcharge['tax_class'])
+				continue;
+
+			$arrTaxIds = array();
+			$arrTax = $this->Isotope->calculateTax($arrSurcharge['tax_class'], $arrSurcharge['total_price'], $arrSurcharge['before_tax']);
+
+			if (is_array($arrTax))
+			{
+				foreach ($arrTax as $k => $tax)
+				{
+					if (array_key_exists($k, $arrTaxes))
+					{
+						$arrTaxes[$k]['total_price'] += $tax['total_price'];
+
+						if (is_numeric($arrTaxes[$k]['price']) && is_numeric($tax['price']))
+						{
+							$arrTaxes[$k]['price'] += $tax['price'];
+						}
+					}
+					else
+					{
+						$arrTaxes[$k] = $tax;
+					}
+
+					$taxId = array_search($k, array_keys($arrTaxes)) + 1;
+					$arrTaxes[$k]['tax_id'] = $taxId;
+					$arrTaxIds[] = $taxId;
+				}
+			}
+
+			$arrPreTax[$i]['tax_id'] = implode(',', $arrTaxIds);
+		}
+
+		$this->arrCache['surcharges'] = array_merge($arrPreTax, $arrTaxes, $arrPostTax);
+		return $this->arrCache['surcharges'];
 	}
 }
 

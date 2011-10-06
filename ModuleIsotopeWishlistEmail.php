@@ -105,15 +105,16 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 			
 			// add custom form data
 			// fields
-			foreach ($objForm->arrFormData as $arrField)
+			foreach ($objForm->arrFormData as $key => $value)
 			{
-				$arrData['form_' . $arrField['name']] = $objForm->arrFields[$arrField['name']]->value;
+				
+				$arrData['form_' . $key] = $value;
 			}
 			
 			// uploads
-			foreach ($objForm->arrFiles as $name => $file)
+			foreach($objForm->arrFiles as $name => $file)
 			{
-				$arrData['form_' . $arrField['name']] = $this->Environment->base . str_replace(TL_ROOT . '/', '', dirname($file['tmp_name'])) . '/' . rawurlencode($file['name']);
+				$arrData['form_' . $name] = $this->Environment->base . str_replace(TL_ROOT . '/', '', dirname($file['tmp_name'])) . '/' . rawurlencode($file['name']);
 			}
 
 			// recipients
@@ -123,7 +124,7 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 				$strRecipients .= $this->iso_wishlist_definedRecipients;
 			}
 			
-			// TODO: maybe we want to make more than one form field available?
+			// @todo: maybe we want to make more than one form field available?
 			if($this->iso_wishlist_recipientFromFormField)
 			{
 				$objFieldName = $this->Database->prepare("SELECT name FROM tl_form_field WHERE id=?")->limit(1)->execute($this->iso_wishlist_formField);

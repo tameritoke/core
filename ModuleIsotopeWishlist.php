@@ -24,6 +24,7 @@
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Kamil Kuźmiński <kamil.kuzminski@gmail.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
+ * @author     Yanick Witschi <yanick.witschi@certo-net.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
@@ -75,6 +76,15 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 	 */
 	protected function compile()
 	{
+		// Surcharges must be initialized before getProducts() to apply tax_id to each product
+		$arrSurcharges = $this->IsotopeWishlist->getSurcharges();
+		foreach( $arrSurcharges as $k => $arrSurcharge )
+		{
+			$arrSurcharges[$k]['price']			= $this->Isotope->formatPriceWithCurrency($arrSurcharge['price']);
+			$arrSurcharges[$k]['total_price']	= $this->Isotope->formatPriceWithCurrency($arrSurcharge['total_price']);
+			$arrSurcharges[$k]['rowclass']		= trim('foot_'.($k+1) . ' ' . $arrSurcharge[$k]['rowclass']);
+		}
+		
 		$arrProducts = $this->IsotopeWishlist->getProducts();
 
 		if (!count($arrProducts))
@@ -167,9 +177,9 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 		$objTemplate->grandTotalLabel = $GLOBALS['TL_LANG']['MSC']['grandTotalLabel'];
 		$objTemplate->subTotalPrice = $this->Isotope->formatPriceWithCurrency($this->IsotopeWishlist->subTotal);
 		$objTemplate->grandTotalPrice = $this->Isotope->formatPriceWithCurrency($this->IsotopeWishlist->grandTotal);
-		// @todo make a module option.
+		// @todo: make a module option.
 		$objTemplate->showOptions = false;
-		$objTemplate->surcharges = array();
+		$objTemplate->surcharges = $arrSurcharges;
 
 		$this->Template->empty = false;
 		$this->Template->wishlist = $objTemplate->parse();
