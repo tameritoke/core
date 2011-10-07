@@ -94,8 +94,7 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 			return;
 		}
 
-		$strClass = version_compare(ISO_VERSION, '0.2', '>') ? 'IsotopeTemplate' : 'FrontendTemplate';
-		$objTemplate = new $strClass($this->iso_cart_layout);
+		$objTemplate = new IsotopeTemplate($this->iso_cart_layout);
 
 		global $objPage;
 		$strUrl = $this->generateFrontendUrl($objPage->row());
