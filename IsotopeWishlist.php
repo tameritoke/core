@@ -156,9 +156,9 @@ class IsotopeWishlist extends IsotopeProductCollection
 		$arrPreTax = $arrPostTax = $arrTaxes = array();
 
 		$arrSurcharges = array();
-		if (isset($GLOBALS['ISO_HOOKS']['checkoutSurcharge']) && is_array($GLOBALS['ISO_HOOKS']['checkoutSurcharge']))
+		if (isset($GLOBALS['ISO_HOOKS']['wishlistSurcharge']) && is_array($GLOBALS['ISO_HOOKS']['wishlistSurcharge']))
 		{
-			foreach ($GLOBALS['ISO_HOOKS']['checkoutSurcharge'] as $callback)
+			foreach ($GLOBALS['ISO_HOOKS']['wishlistSurcharge'] as $callback)
 			{
 				$this->import($callback[0]);
 				$arrSurcharges = $this->{$callback[0]}->{$callback[1]}($arrSurcharges);
