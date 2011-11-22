@@ -32,7 +32,7 @@
 /**
  * Miscellaneous
  */
-$GLOBALS['TL_LANG']['MSC']['addedToWishlist']   = 'The select product has been added to your shopping wishlist.';
+$GLOBALS['TL_LANG']['MSC']['addedToWishlist']   = 'The selected product has been added to your shopping wishlist.';
 $GLOBALS['TL_LANG']['MSC']['noItemsInWishlist'] = 'There are no items in your wishlist.';
 $GLOBALS['TL_LANG']['MSC']['wishlistBT']        = 'Shopping Wishlist';
 $GLOBALS['TL_LANG']['MSC']['sendWishlistBT']    = 'Send Wishlist by e-mail';
