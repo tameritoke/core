@@ -36,7 +36,9 @@ $GLOBALS['TL_LANG']['MSC']['addedToWishlist']   = 'The selected product has been
 $GLOBALS['TL_LANG']['MSC']['noItemsInWishlist'] = 'There are no items in your wishlist.';
 $GLOBALS['TL_LANG']['MSC']['wishlistBT']        = 'Shopping Wishlist';
 $GLOBALS['TL_LANG']['MSC']['sendWishlistBT']    = 'Send Wishlist by e-mail';
-
+$GLOBALS['TL_LANG']['MSC']['updateWishlistBT'] 	= 'Update Wishlist';
+$GLOBALS['TL_LANG']['MSC']['viewWishlist']		= 'View your wishlist';
+$GLOBALS['TL_LANG']['MSC']['wishlistSent']		= 'Your wishlist has been sent!';
 
 /**
  * Buttons

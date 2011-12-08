@@ -100,7 +100,7 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 				'paymentPrice'	=> $this->Isotope->formatPriceWithCurrency($this->IsotopeWishlist->Payment->price, false),
 				'grandTotal'	=> $this->Isotope->formatPriceWithCurrency($this->IsotopeWishlist->grandTotal, false),
 				'cart_text'		=> strip_tags($this->replaceInsertTags($this->IsotopeWishlist->getProducts('iso_products_text'))),
-				'cart_html'		=> $this->replaceInsertTags($this->IsotopeWishlist->getProducts('iso_products_html')),
+				'cart_html'		=> $this->replaceInsertTags($this->IsotopeWishlist->getProducts('iso_products_html_wishlist')),
 			);			
 			
 			// add custom form data
@@ -130,12 +130,17 @@ class ModuleIsotopeWishlistEmail extends ModuleIsotope
 				$objFieldName = $this->Database->prepare("SELECT name FROM tl_form_field WHERE id=?")->limit(1)->execute($this->iso_wishlist_formField);
 				if($objFieldName->numRows)
 				{
-					$strRecipients .= ',' . $objForm->arrFields[$objFieldName->name]->value;
+					$strRecipients = $objForm->arrFields[$objFieldName->name]->value;
+					
+					
 				}
 				
+								
 			}
 
 			$this->Isotope->sendMail($this->iso_mail_customer, $strRecipients, $this->language, $arrData);
+			
+			$_SESSION['ISO_CONFIRM'][] = $GLOBALS['TL_LANG']['MSC']['wishlistSent'];
 			
 			// clear the wishlist if activated in module settings
 			if ($this->iso_wishlist_clearList)

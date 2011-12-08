@@ -80,8 +80,18 @@ class Wishlist extends Frontend
 		$intQuantity = ($objModule->iso_use_quantity && intval($this->Input->post('quantity_requested')) > 0) ? intval($this->Input->post('quantity_requested')) : 1;
 
 		if ($this->IsotopeWishlist->addProduct($objProduct, $intQuantity) !== false)
-		{
-			$_SESSION['ISO_CONFIRM'][] = $GLOBALS['TL_LANG']['MSC']['addedToWishlist'];
+		{			
+			if($objModule->iso_wishlist_jumpTo)
+			{
+				// Get current "jumpTo" page
+				$objPage = $this->Database->prepare("SELECT id, alias FROM tl_page WHERE id=?")
+										  ->limit(1)
+										  ->execute($objModule->iso_wishlist_jumpTo);
+						
+				$strUrl = '<a href="'.ampersand($this->generateFrontendUrl($objPage->row())).'" title="'.$GLOBALS['TL_LANG']['MSC']['viewWishlist'].'">'.$GLOBALS['TL_LANG']['MSC']['viewWishlist'].'</a>';
+			}
+				
+			$_SESSION['ISO_CONFIRM'][] = $GLOBALS['TL_LANG']['MSC']['addedToWishlist'] . ' ' . $strUrl;
 			$this->jumpToOrReload($objModule->iso_addProductJumpTo);
 		}
 	}

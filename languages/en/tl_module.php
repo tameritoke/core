@@ -38,3 +38,4 @@ $GLOBALS['TL_LANG']['tl_module']['iso_wishlist_clearList'] 				= array('Clear th
 $GLOBALS['TL_LANG']['tl_module']['iso_wishlist_definedRecipients'] 		= array('List of recipients', 'Enter a comma-separated list of e-mail addresses. Leave the field empty if you don\'t want to add recipients.');
 $GLOBALS['TL_LANG']['tl_module']['iso_wishlist_recipientFromFormField'] = array('Send the e-mail to an address entered in the form', 'Activate this checkbox to choose the form field containing the e-mail address.');
 $GLOBALS['TL_LANG']['tl_module']['iso_wishlist_formField'] 				= array('e-mail form fields', 'You can only choose form fields validating for a correct e-mail address.');
+$GLOBALS['TL_LANG']['tl_module']['iso_continueShopping']		= array('Enable "Continue shopping" button', 'Add a link to the currently added product to the cart.');

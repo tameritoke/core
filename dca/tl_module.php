@@ -32,9 +32,9 @@
 /**
  * Add a palette to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['iso_wishlist']	     = '{title_legend},name,headline,type;{redirect_legend},iso_cart_jumpTo,iso_wishlist_jumpTo;{template_legend},iso_includeMessages,iso_cart_layout;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['iso_wishlist']	     = '{title_legend},name,headline,type;{redirect_legend},iso_cart_jumpTo,iso_wishlist_jumpTo,iso_continueShopping;{template_legend},iso_includeMessages,iso_cart_layout;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['iso_wishlistemail'] = '{title_legend},name,headline,type;{config_legend},iso_mail_customer,iso_wishlist_form,iso_wishlist_clearList,iso_wishlist_definedRecipients,iso_wishlist_recipientFromFormField;{redirect_legend},jumpTo;{template_legend},iso_includeMessages;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-
+$GLOBALS['TL_DCA']['tl_module']['palettes']['iso_productreader']		= '{title_legend},name,headline,type;{config_legend},iso_use_quantity;{redirect_legend},iso_addProductJumpTo,iso_wishlist_jumpTo;{template_legend:hide},iso_includeMessages,iso_reader_layout,iso_buttons;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 /**
  * Selectors
  */
@@ -93,7 +93,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['iso_wishlist_formField'] = array
 	'eval'                    => array('mandatory'=>true)
 );
 
-
+$GLOBALS['TL_DCA']['tl_module']['fields']['iso_continueShopping'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['iso_continueShopping'],
+	'exclude'                 => true,
+	'inputType'               => 'checkbox',
+	'eval'					  => array('tl_class'=>'w50 m12'),
+);
 
 class tl_module_iso_wishlist extends Backend
 {

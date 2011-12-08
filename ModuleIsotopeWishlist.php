@@ -86,6 +86,9 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 		}
 		
 		$arrProducts = $this->IsotopeWishlist->getProducts();
+		
+		//Wishlist doesn't have a redirect upon add feature, therefore, we'll default to the last added product for the "continue shopping" feature.
+		$lastAdded = $this->Isotope->Cart->lastAdded; //count($_SESSION['ISO_CONFIRM']) ? $this->Isotope->Cart->lastAdded : 0;
 
 		if (!count($arrProducts))
 		{
@@ -142,6 +145,11 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 				'remove_link_title' => sprintf($GLOBALS['TL_LANG']['MSC']['removeProductLinkTitle'], $objProduct->name),
 				'class'				=> 'row_' . $i . ($i%2 ? ' even' : ' odd') . ($i==0 ? ' row_first' : ''),
 			));
+			
+			//if ($lastAdded == $objProduct->cart_id)
+			//{
+			$objTemplate->continueJumpTo = $objProduct->href_reader;
+			//}
 		}
 
 		// Reload if the "checkout" button has been submitted and minimum order total is reached
@@ -169,9 +177,9 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 		$objTemplate->products = $arrProductData;
 		$objTemplate->cartJumpTo = $this->iso_cart_jumpTo ? $this->generateFrontendUrl($this->Database->execute("SELECT * FROM tl_page WHERE id={$this->iso_cart_jumpTo}")->fetchAssoc()) : '';
 		$objTemplate->cartLabel = $GLOBALS['TL_LANG']['MSC']['wishlistBT'];
-		$objTemplate->checkoutJumpToLabel = $GLOBALS['TL_LANG']['MSC']['sendWishlistBT'];
-		$objTemplate->checkoutJumpTo = $this->iso_wishlist_jumpTo ? $this->generateFrontendUrl($this->Database->execute("SELECT * FROM tl_page WHERE id={$this->iso_wishlist_jumpTo}")->fetchAssoc()) : '';
-
+		$objTemplate->wishlistJumpToLabel = $GLOBALS['TL_LANG']['MSC']['sendWishlistBT'];
+		$objTemplate->wishlistJumpTo = $this->iso_wishlist_jumpTo ? $this->generateFrontendUrl($this->Database->execute("SELECT * FROM tl_page WHERE id={$this->iso_wishlist_jumpTo}")->fetchAssoc()) : '';
+		$objTemplate->continueLabel = $GLOBALS['TL_LANG']['MSC']['continueShoppingBT'];
 		$objTemplate->subTotalLabel = $GLOBALS['TL_LANG']['MSC']['subTotalLabel'];
 		$objTemplate->grandTotalLabel = $GLOBALS['TL_LANG']['MSC']['grandTotalLabel'];
 		$objTemplate->subTotalPrice = $this->Isotope->formatPriceWithCurrency($this->IsotopeWishlist->subTotal);
@@ -182,6 +190,7 @@ class ModuleIsotopeWishlist extends ModuleIsotope
 
 		$this->Template->empty = false;
 		$this->Template->wishlist = $objTemplate->parse();
+		
 	}
 }
 
