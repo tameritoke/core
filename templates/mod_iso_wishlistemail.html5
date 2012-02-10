@@ -21,7 +21,7 @@
 <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
 <?php foreach($this->fields as $objWidget): ?>
 <div class="widget">
-	<?php if($objWidget->inputType == 'captcha'): ?>
+	<?php if($objWidget instanceof FormCaptcha): ?>
 	<?php echo $objWidget->generateLabel(); ?> <?php echo $objWidget->generateWithError(); ?> <?php echo $objWidget->generateQuestion(); ?>
 	<?php continue; endif; ?>
 	<?php echo $objWidget->generateLabel(); ?> <?php echo $objWidget->generateWithError(); ?>
