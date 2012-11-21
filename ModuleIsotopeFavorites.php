@@ -107,18 +107,18 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 			// Remove product from favorites
 			if ($this->Input->get('remove') == $objProduct->cart_id && $this->IsotopeFavorites->deleteProduct($objProduct))
 			{
-				$this->redirect((strlen($this->Input->get('referer')) ? base64_decode($this->Input->get('referer', true)) : $strUrl));
+				$this->redirect($strUrl);
 			}
 
 			if ($this->Input->get('move') == $objProduct->cart_id)
 			{
 				$this->Isotope->Cart->addProduct($objProduct,$objProduct->quantity_requested);
 
-				$this->redirect((strlen($this->Input->get('referer')) ? base64_decode($this->Input->get('referer', true)) : $strUrl));
+				$this->redirect($strUrl);
 			}
 			
 			// Update favorites data if form has been submitted
-			elseif ($this->Input->post('FORM_SUBMIT') == ('iso_favorites_update_'.$this->id) && is_array($arrQuantity))
+			elseif ($this->Input->post('FORM_SUBMIT') == ('iso_favorites_'.$this->id) && is_array($arrQuantity))
 			{
 				$blnReload = true;
 				$this->IsotopeFavorites->updateProduct($objProduct, array('product_quantity'=>$arrQuantity[$objProduct->cart_id]));
@@ -146,7 +146,7 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 				'move_link'			=> ampersand($strUrl . ($GLOBALS['TL_CONFIG']['disableAlias'] ? '&' : '?') . 'move='.$objProduct->cart_id.'&referer='.base64_encode($this->Environment->request)),
 				'move_link_text'  	=> $GLOBALS['TL_LANG']['MSC']['moveProductLinkText'],
 				'move_link_title' 	=> sprintf($GLOBALS['TL_LANG']['MSC']['moveProductLinkTitle'], $objProduct->name),				
-				'remove_link'		=> ampersand($strUrl . ($GLOBALS['TL_CONFIG']['disableAlias'] ? '&' : '?') . 'remove='.$objProduct->cart_id.'&referer='.base64_encode($this->Environment->request)),
+				'remove_link'		=> ampersand($strUrl . ($GLOBALS['TL_CONFIG']['disableAlias'] ? '&' : '?') . 'remove='.$objProduct->cart_id),
 				'remove_link_text'  => $GLOBALS['TL_LANG']['MSC']['removeProductLinkText'],
 				'remove_link_title' => sprintf($GLOBALS['TL_LANG']['MSC']['removeProductLinkTitle'], $objProduct->name),
 				'class'				=> 'row_' . $i . ($i%2 ? ' even' : ' odd') . ($i==0 ? ' row_first' : ''),
