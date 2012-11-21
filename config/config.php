@@ -38,5 +38,4 @@ $GLOBALS['FE_MOD']['isotope']['iso_favorites']      = 'ModuleIsotopeFavorites';
  * HOOKs
  */
 $GLOBALS['ISO_HOOKS']['buttons'][] = array('Favorites', 'generateButton');
-$GLOBALS['TL_HOOKS']['isoButtons'][] = array('Favorites', 'generateButton');
 
