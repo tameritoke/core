@@ -171,8 +171,7 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 		}
 
 		$objTemplate->hasError = false;
-		$objTemplate->formId = 'iso_favorites_update_'.$this->id;
-		$objTemplate->formSubmit = 'iso_favorites_update_'.$this->id;
+		$objTemplate->formSubmit = 'iso_favorites_'.$this->id;
 		$objTemplate->summary = $GLOBALS['ISO_LANG']['MSC']['favoritesSummary'];
 		$objTemplate->action = $this->Environment->request;
 		$objTemplate->products = $arrProductData;
