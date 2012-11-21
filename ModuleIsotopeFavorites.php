@@ -83,7 +83,7 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 			$arrSurcharges[$k]['total_price']	= $this->Isotope->formatPriceWithCurrency($arrSurcharge['total_price']);
 			$arrSurcharges[$k]['rowclass']		= trim('foot_'.($k+1) . ' ' . $arrSurcharge[$k]['rowclass']);
 		}
-		
+
 		$arrProducts = $this->IsotopeFavorites->getProducts();
 
 		if (!count($arrProducts))
@@ -110,19 +110,20 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 				$this->redirect($strUrl);
 			}
 
-			if ($this->Input->get('move') == $objProduct->cart_id)
-			{
-				$this->Isotope->Cart->addProduct($objProduct,$objProduct->quantity_requested);
-
-				$this->redirect($strUrl);
-			}
-			
 			// Update favorites data if form has been submitted
-			elseif ($this->Input->post('FORM_SUBMIT') == ('iso_favorites_'.$this->id) && is_array($arrQuantity))
+			if ($this->Input->post('FORM_SUBMIT') == ('iso_favorites_'.$this->id) && is_array($arrQuantity))
 			{
 				$blnReload = true;
+
 				$this->IsotopeFavorites->updateProduct($objProduct, array('product_quantity'=>$arrQuantity[$objProduct->cart_id]));
-				continue; // no need to generate $arrProductData, we reload anyway
+
+				if ($this->Input->post('add_favorite_' . $objProduct->cart_id) != '')
+				{
+					$this->Isotope->Cart->addProduct($objProduct, $arrQuantity[$objProduct->cart_id]);
+				}
+
+				// no need to generate $arrProductData, we reload anyway
+				continue;
 			}
 
 			// No need to generate product data if we reload anyway
@@ -143,9 +144,8 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 				'quantity'			=> $objProduct->quantity_requested,
 				'cart_item_id'		=> $objProduct->cart_id,
 				'product_options'	=> $objProduct->getOptions(),
-				'move_link'			=> ampersand($strUrl . ($GLOBALS['TL_CONFIG']['disableAlias'] ? '&' : '?') . 'move='.$objProduct->cart_id.'&referer='.base64_encode($this->Environment->request)),
-				'move_link_text'  	=> $GLOBALS['TL_LANG']['MSC']['moveProductLinkText'],
-				'move_link_title' 	=> sprintf($GLOBALS['TL_LANG']['MSC']['moveProductLinkTitle'], $objProduct->name),				
+				'add_link_text'  	=> $GLOBALS['TL_LANG']['MSC']['moveProductLinkText'],
+				'add_link_title' 	=> sprintf($GLOBALS['TL_LANG']['MSC']['moveProductLinkTitle'], $objProduct->name),
 				'remove_link'		=> ampersand($strUrl . ($GLOBALS['TL_CONFIG']['disableAlias'] ? '&' : '?') . 'remove='.$objProduct->cart_id),
 				'remove_link_text'  => $GLOBALS['TL_LANG']['MSC']['removeProductLinkText'],
 				'remove_link_title' => sprintf($GLOBALS['TL_LANG']['MSC']['removeProductLinkTitle'], $objProduct->name),
@@ -154,9 +154,9 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 		}
 
 		// Reload if the "checkout" button has been submitted and minimum order total is reached
-		if ($blnReload && $this->Input->post('checkout') != '' && $this->iso_favorites_jumpTo)
+		if ($blnReload && $this->iso_cart_jumpTo && $this->Input->post('update_favorites') == '')
 		{
-			$this->redirect($this->generateFrontendUrl($this->Database->execute("SELECT * FROM tl_page WHERE id={$this->iso_favorites_jumpTo}")->fetchAssoc()));
+			$this->redirect($this->generateFrontendUrl($this->Database->execute("SELECT * FROM tl_page WHERE id={$this->iso_cart_jumpTo}")->fetchAssoc()));
 		}
 
 		// Otherwise, just reload the page
@@ -175,10 +175,6 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 		$objTemplate->summary = $GLOBALS['ISO_LANG']['MSC']['favoritesSummary'];
 		$objTemplate->action = $this->Environment->request;
 		$objTemplate->products = $arrProductData;
-		$objTemplate->cartJumpTo = $this->iso_cart_jumpTo ? $this->generateFrontendUrl($this->Database->execute("SELECT * FROM tl_page WHERE id={$this->iso_cart_jumpTo}")->fetchAssoc()) : '';
-		$objTemplate->cartLabel = $GLOBALS['TL_LANG']['MSC']['favoritesBT'];
-		$objTemplate->checkoutJumpToLabel = $GLOBALS['TL_LANG']['MSC']['sendFavoritesBT'];
-		$objTemplate->checkoutJumpTo = $this->iso_favorites_jumpTo ? $this->generateFrontendUrl($this->Database->execute("SELECT * FROM tl_page WHERE id={$this->iso_favorites_jumpTo}")->fetchAssoc()) : '';
 
 		$objTemplate->subTotalLabel = $GLOBALS['TL_LANG']['MSC']['subTotalLabel'];
 		$objTemplate->grandTotalLabel = $GLOBALS['TL_LANG']['MSC']['grandTotalLabel'];
@@ -190,7 +186,7 @@ class ModuleIsotopeFavorites extends ModuleIsotope
 
 		$this->Template->empty = false;
 		$this->Template->favorites = $objTemplate->parse();
-		
+
 	}
 }
 

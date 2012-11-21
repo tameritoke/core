@@ -60,17 +60,15 @@
    		<td class="col_3 price"><?php echo $product['price']; ?></td>
     	<td class="col_4 price total"><?php echo $product['total_price']; ?></td>
     	<td class="col_5 tax"><?php echo $product['tax_id']; ?></td>
-        <td class="move"><a href="<?php echo $product['move_link']; ?>" title="<?php echo $product['move_link_title']; ?>" class="move"><?php echo $product['move_link_text']; ?></a></td>
-    	<td class="col_6 col_last remove"><a href="<?php echo $product['remove_link']; ?>" title="<?php echo $product['remove_link_title']; ?>" class="remove"><?php echo $product['remove_link_text']; ?></a></td>
+        <td class="col_6 move"><input type="submit" name="add_favorite_<?php echo $product['cart_item_id']; ?>" title="<?php echo $product['add_link_title']; ?>" value="<?php echo $product['add_link_text']; ?>"></td>
+    	<td class="col_7 col_last remove"><a href="<?php echo $product['remove_link']; ?>" title="<?php echo $product['remove_link_title']; ?>" class="remove"><?php echo $product['remove_link_text']; ?></a></td>
 	</tr>
 <?php endforeach; ?>
     </tbody>
 </table>
 </div>
 <div class="submit_container">
-	<input type="submit" class="submit update" name="update_cart" id="ctrl_update_cart" value="<?php echo $GLOBALS['TL_LANG']['MSC']['updateCartBT']; ?>"><?php if ($this->checkoutJumpTo): ?>
-	<input type="submit" class="submit checkout" name="checkout" id="ctrl_checkout" value="<?php echo $this->checkoutJumpToLabel; ?>"><?php endif; ?>
-	<?php if ($this->continueJumpTo) : ?><a class="continue" href="<?php echo $this->continueJumpTo; ?>"><?php echo $this->continueLabel; ?></a><?php endif; ?>
+	<input type="submit" class="submit update" name="update_favorites" id="ctrl_update_favorites" value="<?php echo $GLOBALS['TL_LANG']['MSC']['updateCartBT']; ?>">
 </div>
 </form>
 <?php if(count($this->forms)) echo implode("\n", $this->forms); ?>
