@@ -29,18 +29,13 @@
 
 
 /**
- * Miscellaneous
+ * Extension folder
  */
-$GLOBALS['TL_LANG']['MSC']['addedToFavorites']   = 'The select product has been added to your shopping favorites.';
-$GLOBALS['TL_LANG']['MSC']['noItemsInFavorites'] = 'There are no items in your favorites.';
-$GLOBALS['TL_LANG']['MSC']['favoritesBT']        = 'Shopping Favorites';
-$GLOBALS['TL_LANG']['MSC']['moveProductLinkText'] = 'Move to my cart';
-$GLOBALS['TL_LANG']['MSC']['moveProductLinkTitle'] = 'Move %s from your favorites to your cart';
-$GLOBALS['TL_LANG']['MSC']['updateFavBT'] = 'Update favorites';
+$GLOBALS['TL_LANG']['MOD']['isotope_favorites']	= array('Isotope eCommerce: Favorites');
 
 
 /**
- * Buttons
+ * Front end modules
  */
-$GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_favorites'] = 'Add To Favorites';
+$GLOBALS['TL_LANG']['FMD']['iso_favorites']      = array('Shopping Favorites', 'A fully-featured shopping favorites module. Box or Full Display can be set by template selection.');
 

@@ -29,18 +29,7 @@
 
 
 /**
- * Miscellaneous
+ * Fields
  */
-$GLOBALS['TL_LANG']['MSC']['addedToFavorites']   = 'The select product has been added to your shopping favorites.';
-$GLOBALS['TL_LANG']['MSC']['noItemsInFavorites'] = 'There are no items in your favorites.';
-$GLOBALS['TL_LANG']['MSC']['favoritesBT']        = 'Shopping Favorites';
-$GLOBALS['TL_LANG']['MSC']['moveProductLinkText'] = 'Move to my cart';
-$GLOBALS['TL_LANG']['MSC']['moveProductLinkTitle'] = 'Move %s from your favorites to your cart';
-$GLOBALS['TL_LANG']['MSC']['updateFavBT'] = 'Update favorites';
-
-
-/**
- * Buttons
- */
-$GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_favorites'] = 'Add To Favorites';
+$GLOBALS['TL_LANG']['tl_module']['iso_favorites_jumpTo'] 				= array('Shopping Favorites Jump to page', 'This setting defines to which page a user will be redirected to see his favorites.');
 
