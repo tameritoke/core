@@ -31,18 +31,5 @@
 /**
  * Add a palette to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['iso_favorites']	     = '{title_legend},name,headline,type;{redirect_legend},iso_cart_jumpTo,iso_favorites_jumpTo;{template_legend},iso_includeMessages,iso_cart_layout;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-
-
-/**
- * Add fields to tl_module
- */
-$GLOBALS['TL_DCA']['tl_module']['fields']['iso_favorites_jumpTo'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['iso_favorites_jumpTo'],
-	'exclude'                 => true,
-	'inputType'               => 'pageTree',
-	'explanation'             => 'jumpTo',
-	'eval'                    => array('fieldType'=>'radio')
-);
+$GLOBALS['TL_DCA']['tl_module']['palettes']['iso_favorites']	     = '{title_legend},name,headline,type;{redirect_legend},iso_cart_jumpTo;{template_legend},iso_includeMessages,iso_cart_layout;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 

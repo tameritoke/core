@@ -10,9 +10,9 @@
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_iso_favorites`
--- 
+--
 
 CREATE TABLE `tl_iso_favorites` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -29,9 +29,9 @@ CREATE TABLE `tl_iso_favorites` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_iso_favorites_items`
--- 
+--
 
 CREATE TABLE `tl_iso_favorites_items` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -47,16 +47,5 @@ CREATE TABLE `tl_iso_favorites_items` (
   `href_reader` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
--- 
--- Table `tl_module`
--- 
-
-CREATE TABLE `tl_module` (
-  `iso_favorites_jumpTo` int(10) unsigned NOT NULL default '0',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
