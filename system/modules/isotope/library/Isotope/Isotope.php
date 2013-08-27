@@ -115,7 +115,7 @@ class Isotope extends \Controller
             static::getInstance()->call('loadDataContainer', 'tl_iso_products');
             \System::loadLanguageFile('tl_iso_products');
 
-            if (TL_MODE == 'FE' && strpos(\Environment::get('script'), 'postsale.php') === false && strpos(\Environment::get('script'), 'cron.php') === false) {
+            if (TL_MODE == 'FE' && !static::getEnvironment()->isPostsaleScript() && !static::getEnvironment()->isCronScript()) {
 
                 // Initialize request cache for product list filters
                 if (\Input::get('isorc') != '') {
