@@ -638,7 +638,7 @@ class Standard extends Product implements IsotopeProduct
 
             $groups = deserialize($this->arrData['groups']);
 
-            if (!is_array($groups) || empty($groups) || !count(array_intersect($groups, $this->User->groups)))
+            if (!is_array($groups) || empty($groups) || !count(array_intersect($groups, Isotope::getEnvironment()->getMemberGroups())))
             {
                 return false;
             }

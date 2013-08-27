@@ -281,16 +281,7 @@ class ProductPriceFinder extends \System
      */
     protected static function getMemberGroups()
     {
-        if (Isotope::getEnvironment()->isFrontendLoggedIn())
-        {
-            $arrGroups = FrontendUser::getInstance()->groups;
-        }
-
-        if (!is_array($arrGroups))
-        {
-            $arrGroups = array();
-        }
-
+        $arrGroups = Isotope::getEnvironment()->getMemberGroups();
         $arrGroups[] = 0;
 
         return $arrGroups;

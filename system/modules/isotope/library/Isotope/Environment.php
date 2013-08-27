@@ -154,12 +154,50 @@ class Environment extends \System
     }
 
     /**
+     * Return groups of current frontend member
+     * @return  array
+     */
+    public function getMemberGroups()
+    {
+        if (!$this->hasMember()) {
+            return array();
+        }
+
+        $arrGroups = deserialize($this->getMember()->groups);
+
+        if (!is_array($arrGroups)) {
+            $arrGroups = array();
+        }
+
+        return $arrGroups;
+    }
+
+    /**
      * Get current backend user
      * @return  \UserModel
      */
     public function getUser()
     {
         return $this->objUser;
+    }
+
+    /**
+     * Return groups of current backend user
+     * @return  array
+     */
+    public function getUserGroups()
+    {
+        if (!$this->hasUser()) {
+            return array();
+        }
+
+        $arrGroups = deserialize($this->getUser()->groups);
+
+        if (!is_array($arrGroups)) {
+            $arrGroups = array();
+        }
+
+        return $arrGroups;
     }
 
     /**
