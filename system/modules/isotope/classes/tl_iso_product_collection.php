@@ -33,7 +33,6 @@ class tl_iso_product_collection extends \Backend
     public function __construct()
     {
         parent::__construct();
-        $this->import('Isotope\Isotope', 'Isotope');
     }
 
 

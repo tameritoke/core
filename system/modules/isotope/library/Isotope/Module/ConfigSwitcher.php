@@ -79,7 +79,6 @@ class ConfigSwitcher extends Module
      */
     protected function compile()
     {
-        $this->import('Isotope\Isotope', 'Isotope');
         $arrConfigs = array();
         $objConfigs = $this->Database->execute("SELECT * FROM tl_iso_config WHERE id IN (" . implode(',', $this->iso_config_ids) . ")");
         $c=0;
