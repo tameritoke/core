@@ -54,6 +54,15 @@ class Environment extends \System
     {
         parent::__construct();
 
+        $this->reset();
+    }
+
+    /**
+     * (Re)set environment from Contao defaults
+     * @return  Environment
+     */
+    public function reset()
+    {
         // Check if frontend user is logged in
         if (FE_USER_LOGGED_IN === true) {
             $objUser = FrontendUser::getInstance();
@@ -68,6 +77,8 @@ class Environment extends \System
 
         $this->blnCanSeeUnpublished = (BE_USER_LOGGED_IN === true);
         $this->blnIsFrontendPreview = (FE_PREVIEW === true);
+
+        return $this;
     }
 
     /**
