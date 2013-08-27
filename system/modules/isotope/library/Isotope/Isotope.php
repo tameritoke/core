@@ -54,6 +54,12 @@ class Isotope extends \Controller
      */
     protected static $objConfig;
 
+    /**
+     * Current working environment
+     * @var Isotope\Environment
+     */
+    protected static $objEnvironment;
+
 
     /**
      * Prevent cloning of the object (Singleton)
@@ -200,6 +206,29 @@ class Isotope extends \Controller
     public static function setConfig(Config $objConfig)
     {
         static::$objConfig = $objConfig;
+    }
+
+    /**
+     * Get current working environment
+     * @return  Isotope\Environment
+     */
+    public static function getEnvironment()
+    {
+        if (null === static::$objEnvironment) {
+            static::initialize();
+            static::$objEnvironment = new Environment();
+        }
+
+        return static::$objEnvironment;
+    }
+
+    /**
+     * Set current working environment object
+     * @param   Isotope\Environment
+     */
+    public static function setEnvironment(Environment $objEnvironment)
+    {
+        static::$objEnvironment = $objEnvironment;
     }
 
 
