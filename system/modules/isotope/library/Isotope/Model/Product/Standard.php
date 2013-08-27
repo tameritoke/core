@@ -623,7 +623,7 @@ class Standard extends Product implements IsotopeProduct
         }
 
         // Show to guests only
-        if ($this->arrData['guests'] && FE_USER_LOGGED_IN === true && BE_USER_LOGGED_IN !== true && !$this->arrData['protected'])
+        if ($this->arrData['guests'] && Isotope::getEnvironment()->isFrontendLoggedIn() && BE_USER_LOGGED_IN !== true && !$this->arrData['protected'])
         {
             return false;
         }
@@ -631,7 +631,7 @@ class Standard extends Product implements IsotopeProduct
         // Protected product
         if (BE_USER_LOGGED_IN !== true && $this->arrData['protected'])
         {
-            if (FE_USER_LOGGED_IN !== true)
+            if (!Isotope::getEnvironment()->isFrontendLoggedIn())
             {
                 return false;
             }

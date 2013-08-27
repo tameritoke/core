@@ -65,7 +65,7 @@ class AddressBook extends Module
             return $objTemplate->parse();
         }
 
-        if (FE_USER_LOGGED_IN !== true) {
+        if (!Isotope::getEnvironment()->isFrontendLoggedIn()) {
             return '';
         }
 

@@ -124,7 +124,7 @@ class ProductList extends Module
             $groups = '';
 
             // Find groups of current user, the cache is groups-specific
-            if (FE_USER_LOGGED_IN === true)
+            if (Isotope::getEnvironment()->isFrontendLoggedIn())
             {
                 $arrGroups = FrontendUser::getInstance()->groups;
 

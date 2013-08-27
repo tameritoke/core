@@ -216,7 +216,7 @@ abstract class Address extends CheckoutStep
 
                 $arrData = $GLOBALS['TL_DCA']['tl_iso_addresses']['fields'][$field['value']];
 
-                if (!is_array($arrData) || !$arrData['eval']['feEditable'] || !$field['enabled'] || ($arrData['eval']['membersOnly'] && FE_USER_LOGGED_IN !== true)) {
+                if (!is_array($arrData) || !$arrData['eval']['feEditable'] || !$field['enabled'] || ($arrData['eval']['membersOnly'] && !Isotope::getEnvironment()->isFrontendLoggedIn())) {
                     continue;
                 }
 
@@ -271,7 +271,7 @@ abstract class Address extends CheckoutStep
     {
         $arrOptions = array();
 
-        if (FE_USER_LOGGED_IN === true) {
+        if (Isotope::getEnvironment()->isFrontendLoggedIn()) {
             // @todo: this var is not being used, there must be something wrong here
             $arrAddresses = $this->getAddresses();
             $arrCountries = $this->getAddressCountries();

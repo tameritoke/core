@@ -60,7 +60,7 @@ class Cart extends ProductCollection implements IsotopeProductCollection
     {
         $objAddress = parent::getBillingAddress();
 
-        if (null === $objAddress && FE_USER_LOGGED_IN === true) {
+        if (null === $objAddress && Isotope::getEnvironment()->isFrontendLoggedIn()) {
             $objAddress = Address::findDefaultBillingForMember($this->User->id);
 
             if (null === $objAddress) {
@@ -81,7 +81,7 @@ class Cart extends ProductCollection implements IsotopeProductCollection
     {
         $objAddress = parent::getShippingAddress();
 
-        if (null === $objAddress && FE_USER_LOGGED_IN === true) {
+        if (null === $objAddress && Isotope::getEnvironment()->isFrontendLoggedIn()) {
             $objAddress = Address::findDefaultShippingForMember($this->User->id);
 
             if (null === $objAddress) {
@@ -109,7 +109,7 @@ class Cart extends ProductCollection implements IsotopeProductCollection
         $strHash = \Input::cookie(static::$strCookie);
 
         //  Check to see if the user is logged in.
-        if (FE_USER_LOGGED_IN !== true)
+        if (!Isotope::getEnvironment()->isFrontendLoggedIn())
         {
             if ($strHash == '')
             {
@@ -129,15 +129,15 @@ class Cart extends ProductCollection implements IsotopeProductCollection
         {
             $objCart = new static();
 
-            $objCart->member    = (FE_USER_LOGGED_IN === true ? \FrontendUser::getInstance()->id : 0);
-            $objCart->uniqid    = (FE_USER_LOGGED_IN === true ? '' : $strHash);
+            $objCart->member    = (Isotope::getEnvironment()->isFrontendLoggedIn() ? \FrontendUser::getInstance()->id : 0);
+            $objCart->uniqid    = (Isotope::getEnvironment()->isFrontendLoggedIn() ? '' : $strHash);
             $objCart->store_id  = $intStore;
         }
 
         $objCart->tstamp = $time;
 
         // Temporary cart available, move to this cart. Must be after creating a new cart!
-         if (FE_USER_LOGGED_IN === true && $strHash != '')
+         if (Isotope::getEnvironment()->isFrontendLoggedIn() && $strHash != '')
          {
              $blnMerge = $objCart->countItems() > 0 ? true : false;
 
