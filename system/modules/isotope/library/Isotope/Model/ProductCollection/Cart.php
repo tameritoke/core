@@ -48,11 +48,6 @@ class Cart extends ProductCollection implements IsotopeProductCollection
     public function __construct(\Database\Result $objResult=null)
     {
         parent::__construct($objResult);
-
-        if (FE_USER_LOGGED_IN === true)
-        {
-            $this->import('FrontendUser', 'User');
-        }
     }
 
 

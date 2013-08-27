@@ -105,11 +105,6 @@ class Standard extends Product implements IsotopeProduct
 
         $this->Database = \Database::getInstance();
 
-        if (FE_USER_LOGGED_IN === true)
-        {
-            $this->User = \FrontendUser::getInstance();
-        }
-
         $arrData = $this->arrData;
         $this->blnLocked = $blnLocked;
 
