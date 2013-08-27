@@ -407,7 +407,7 @@ class Checkout extends Module
         }
 
         // Redirect to login page if not logged in
-        if ($this->iso_checkout_method == 'member' && !Isotope::getEnvironment()->isFrontendLoggedIn())
+        if ($this->iso_checkout_method == 'member' && !Isotope::getEnvironment()->hasMember())
         {
             $objPage = $this->Database->prepare("SELECT id,alias FROM tl_page WHERE id=?")->limit(1)->execute($this->iso_login_jumpTo);
 
@@ -422,7 +422,7 @@ class Checkout extends Module
 
             \Controller::redirect(\Controller::generateFrontendUrl($objPage->row()));
         }
-        elseif ($this->iso_checkout_method == 'guest' && Isotope::getEnvironment()->isFrontendLoggedIn())
+        elseif ($this->iso_checkout_method == 'guest' && Isotope::getEnvironment()->hasMember())
         {
             $this->Template = new \Isotope\Template('mod_message');
             $this->Template->type = 'error';

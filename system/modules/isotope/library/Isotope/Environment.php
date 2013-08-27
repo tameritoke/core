@@ -82,19 +82,19 @@ class Environment extends \System
     }
 
     /**
-     * Return true if a backend user is logged in
+     * Return true if a backend user is available
      * @return  bool
      */
-    public function isBackendLoggedIn()
+    public function hasUser()
     {
         return (null !== $this->objUser);
     }
 
     /**
-     * Return true if a frontend member is logged in
+     * Return true if a frontend member is available
      * @return  bool
      */
-    public function isFrontendLoggedIn()
+    public function hasMember()
     {
         return (null !== $this->objMember);
     }
@@ -145,19 +145,19 @@ class Environment extends \System
     }
 
     /**
-     * Get logged in frontend member
+     * Get current frontend member
      * @return  \MemberModel
      */
-    public function getLoggedInMember()
+    public function getMember()
     {
         return $this->objMember;
     }
 
     /**
-     * Get logged in backend user
+     * Get current backend user
      * @return  \UserModel
      */
-    public function getLoggedInUser()
+    public function getUser()
     {
         return $this->objUser;
     }
@@ -187,11 +187,11 @@ class Environment extends \System
     }
 
     /**
-     * Set logged in frontend member
+     * Set current frontend member
      * @param   \MemberModel
      * @return  Environment
      */
-    public function setLoggedInMember(\MemberModel $objMember)
+    public function setMember(\MemberModel $objMember)
     {
         $this->objMember = $objMember;
 
@@ -199,11 +199,11 @@ class Environment extends \System
     }
 
     /**
-     * Set logged in backend user
+     * Set current backend user
      * @param   \UserModel
      * @return  Environment
      */
-    public function setLoggedInUser(\UserModel $objUser)
+    public function setUser(\UserModel $objUser)
     {
         $this->objUser = $objUser;
 

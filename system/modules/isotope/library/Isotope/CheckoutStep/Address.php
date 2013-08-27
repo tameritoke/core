@@ -216,7 +216,7 @@ abstract class Address extends CheckoutStep
 
                 $arrData = $GLOBALS['TL_DCA']['tl_iso_addresses']['fields'][$field['value']];
 
-                if (!is_array($arrData) || !$arrData['eval']['feEditable'] || !$field['enabled'] || ($arrData['eval']['membersOnly'] && !Isotope::getEnvironment()->isFrontendLoggedIn())) {
+                if (!is_array($arrData) || !$arrData['eval']['feEditable'] || !$field['enabled'] || ($arrData['eval']['membersOnly'] && !Isotope::getEnvironment()->hasMember())) {
                     continue;
                 }
 
@@ -271,7 +271,7 @@ abstract class Address extends CheckoutStep
     {
         $arrOptions = array();
 
-        if (Isotope::getEnvironment()->isFrontendLoggedIn()) {
+        if (Isotope::getEnvironment()->hasMember()) {
             // @todo: this var is not being used, there must be something wrong here
             $arrAddresses = $this->getAddresses();
             $arrCountries = $this->getAddressCountries();
@@ -323,8 +323,12 @@ abstract class Address extends CheckoutStep
      */
     protected function getAddresses()
     {
+        if (!Isotope::getEnvironment()->hasMember()) {
+            return array();
+        }
+
         $arrAddresses = array();
-        $objAddresses = AddressModel::findForMember($this->User->id, array('order'=>'isDefaultBilling DESC, isDefaultShipping DESC'));
+        $objAddresses = AddressModel::findForMember(Isotope::getEnvironment()->getMember()->id, array('order'=>'isDefaultBilling DESC, isDefaultShipping DESC'));
 
         if (null !== $objAddresses) {
             while ($objAddresses->next()) {

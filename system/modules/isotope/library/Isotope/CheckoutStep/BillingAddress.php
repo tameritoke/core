@@ -38,7 +38,7 @@ class BillingAddress extends Address implements IsotopeCheckoutStep
         $blnRequiresPayment = Isotope::getCart()->requiresPayment();
 
         $this->Template->headline = $blnRequiresPayment ? $GLOBALS['TL_LANG']['MSC']['billing_address'] : $GLOBALS['TL_LANG']['MSC']['customer_address'];
-        $this->Template->message = (Isotope::getEnvironment()->isFrontendLoggedIn() ? $GLOBALS['TL_LANG']['MSC'][($blnRequiresPayment ? 'billing' : 'customer') . '_address_message'] : $GLOBALS['TL_LANG']['MSC'][($blnRequiresPayment ? 'billing' : 'customer') . '_address_guest_message']);
+        $this->Template->message = (Isotope::getEnvironment()->hasMember() ? $GLOBALS['TL_LANG']['MSC'][($blnRequiresPayment ? 'billing' : 'customer') . '_address_message'] : $GLOBALS['TL_LANG']['MSC'][($blnRequiresPayment ? 'billing' : 'customer') . '_address_guest_message']);
 
 /*
         if (!$this->hasError()) {

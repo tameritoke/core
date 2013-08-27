@@ -60,11 +60,11 @@ class Cart extends ProductCollection implements IsotopeProductCollection
     {
         $objAddress = parent::getBillingAddress();
 
-        if (null === $objAddress && Isotope::getEnvironment()->isFrontendLoggedIn()) {
-            $objAddress = Address::findDefaultBillingForMember($this->User->id);
+        if (null === $objAddress && Isotope::getEnvironment()->hasMember()) {
+            $objAddress = Address::findDefaultBillingForMember(Isotope::getEnvironment()->getMember()->id);
 
             if (null === $objAddress) {
-                $objAddress = Address::createForMember(FrontendUser::getInstance()->id, Isotope::getConfig()->getBillingFields());
+                $objAddress = Address::createForMember(Isotope::getEnvironment()->getMember()->id, Isotope::getConfig()->getBillingFields());
             }
         }
 
@@ -81,11 +81,11 @@ class Cart extends ProductCollection implements IsotopeProductCollection
     {
         $objAddress = parent::getShippingAddress();
 
-        if (null === $objAddress && Isotope::getEnvironment()->isFrontendLoggedIn()) {
-            $objAddress = Address::findDefaultShippingForMember($this->User->id);
+        if (null === $objAddress && Isotope::getEnvironment()->hasMember()) {
+            $objAddress = Address::findDefaultShippingForMember(Isotope::getEnvironment()->getMember()->id);
 
             if (null === $objAddress) {
-                $objAddress = Address::createForMember(FrontendUser::getInstance()->id, Isotope::getConfig()->getShippingFields());
+                $objAddress = Address::createForMember(Isotope::getEnvironment()->getMember()->id, Isotope::getConfig()->getShippingFields());
             }
         }
 
@@ -109,7 +109,7 @@ class Cart extends ProductCollection implements IsotopeProductCollection
         $strHash = \Input::cookie(static::$strCookie);
 
         //  Check to see if the user is logged in.
-        if (!Isotope::getEnvironment()->isFrontendLoggedIn())
+        if (!Isotope::getEnvironment()->hasMember())
         {
             if ($strHash == '')
             {
@@ -129,15 +129,15 @@ class Cart extends ProductCollection implements IsotopeProductCollection
         {
             $objCart = new static();
 
-            $objCart->member    = (Isotope::getEnvironment()->isFrontendLoggedIn() ? \FrontendUser::getInstance()->id : 0);
-            $objCart->uniqid    = (Isotope::getEnvironment()->isFrontendLoggedIn() ? '' : $strHash);
+            $objCart->member    = (Isotope::getEnvironment()->hasMember() ? \FrontendUser::getInstance()->id : 0);
+            $objCart->uniqid    = (Isotope::getEnvironment()->hasMember() ? '' : $strHash);
             $objCart->store_id  = $intStore;
         }
 
         $objCart->tstamp = $time;
 
         // Temporary cart available, move to this cart. Must be after creating a new cart!
-         if (Isotope::getEnvironment()->isFrontendLoggedIn() && $strHash != '')
+         if (Isotope::getEnvironment()->hasMember() && $strHash != '')
          {
              $blnMerge = $objCart->countItems() > 0 ? true : false;
 

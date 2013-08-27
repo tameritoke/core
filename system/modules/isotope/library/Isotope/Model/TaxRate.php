@@ -67,19 +67,19 @@ class TaxRate extends \Model
         }
 
         // Tax rate is for guests only
-        if ($this->guests && Isotope::getEnvironment()->isFrontendLoggedIn() && !$this->protected)
+        if ($this->guests && Isotope::getEnvironment()->hasMember() && !$this->protected)
         {
             return false;
         }
 
         // Tax rate is protected but no member is logged in
-        elseif ($this->protected && !Isotope::getEnvironment()->isFrontendLoggedIn() && !$this->guests)
+        elseif ($this->protected && !Isotope::getEnvironment()->hasMember() && !$this->guests)
         {
             return false;
         }
 
         // Tax rate is protected and member logged in, check member groups
-        elseif ($this->protected && Isotope::getEnvironment()->isFrontendLoggedIn())
+        elseif ($this->protected && Isotope::getEnvironment()->hasMember())
         {
             $groups = deserialize($this->groups);
 

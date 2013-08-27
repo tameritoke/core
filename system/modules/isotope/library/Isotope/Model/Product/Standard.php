@@ -623,7 +623,7 @@ class Standard extends Product implements IsotopeProduct
         }
 
         // Show to guests only
-        if ($this->arrData['guests'] && Isotope::getEnvironment()->isFrontendLoggedIn() && !Isotope::getEnvironment()->canSeeUnpublished() && !$this->arrData['protected'])
+        if ($this->arrData['guests'] && Isotope::getEnvironment()->hasMember() && !Isotope::getEnvironment()->canSeeUnpublished() && !$this->arrData['protected'])
         {
             return false;
         }
@@ -631,7 +631,7 @@ class Standard extends Product implements IsotopeProduct
         // Protected product
         if (!Isotope::getEnvironment()->canSeeUnpublished() && $this->arrData['protected'])
         {
-            if (!Isotope::getEnvironment()->isFrontendLoggedIn())
+            if (!Isotope::getEnvironment()->hasMember())
             {
                 return false;
             }

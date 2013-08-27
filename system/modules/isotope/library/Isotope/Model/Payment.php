@@ -104,7 +104,7 @@ abstract class Payment extends TypeAgent
             return false;
         }
 
-        if (($this->guests && Isotope::getEnvironment()->isFrontendLoggedIn()) || ($this->protected && !Isotope::getEnvironment()->isFrontendLoggedIn()))
+        if (($this->guests && Isotope::getEnvironment()->hasMember()) || ($this->protected && !Isotope::getEnvironment()->hasMember()))
         {
             return false;
         }
