@@ -59,7 +59,7 @@ abstract class Product extends TypeAgent
             $arrColumns = array(static::$strTable . '.' . $arrColumns . '=?');
         }
 
-        if (BE_USER_LOGGED_IN !== true) {
+        if (!Isotope::getEnvironment()->canSeeUnpublished()) {
             $time = time();
             $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time)";
         }
@@ -80,7 +80,7 @@ abstract class Product extends TypeAgent
         $arrColumns = array("$t." . static::$strPk . "=?");
         $arrValues = array((int) $intId);
 
-        if (BE_USER_LOGGED_IN !== true) {
+        if (!Isotope::getEnvironment()->canSeeUnpublished()) {
             $time = time();
             $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time)";
         }
@@ -114,7 +114,7 @@ abstract class Product extends TypeAgent
 		$arrColumns = array("($t.id=? OR $t.alias=?)");
         $arrValues = array((is_numeric($varId) ? $varId : 0), $varId);
 
-        if (BE_USER_LOGGED_IN !== true) {
+        if (!Isotope::getEnvironment()->canSeeUnpublished()) {
             $time = time();
             $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time)";
         }
@@ -147,7 +147,7 @@ abstract class Product extends TypeAgent
 
         $arrColumns = array("$t.id IN (" . implode(',', array_map('intval', $arrIds)) . ")");
 
-        if (BE_USER_LOGGED_IN !== true) {
+        if (!Isotope::getEnvironment()->canSeeUnpublished()) {
             $time = time();
             $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time)";
         }
@@ -178,7 +178,7 @@ abstract class Product extends TypeAgent
 
         $arrColumns = array("$t.pid=?");
 
-        if (BE_USER_LOGGED_IN !== true) {
+        if (!Isotope::getEnvironment()->canSeeUnpublished()) {
             $time = time();
             $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time)";
         }
@@ -210,7 +210,7 @@ abstract class Product extends TypeAgent
 
         $arrColumns = array("c.page_id IN (" . implode(',', array_map('intval', $arrCategories)) . ")");
 
-        if (BE_USER_LOGGED_IN !== true) {
+        if (!Isotope::getEnvironment()->canSeeUnpublished()) {
             $time = time();
             $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time)";
         }

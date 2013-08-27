@@ -39,7 +39,7 @@ class PaymentMethod extends CheckoutStep implements IsotopeCheckoutStep
         $arrOptions = array();
 
         $arrIds = array_map('intval', deserialize($this->objModule->iso_payment_modules, true));
-        $objModules = Payment::findBy(array('id IN (' . implode(',', $arrIds) . ')', (BE_USER_LOGGED_IN === true ? '' : "enabled='1'")), null, array('order'=>\Database::getInstance()->findInSet('id', $arrIds)));
+        $objModules = Payment::findBy(array('id IN (' . implode(',', $arrIds) . ')', (Isotope::getEnvironment()->canSeeUnpublished() ? '' : "enabled='1'")), null, array('order'=>\Database::getInstance()->findInSet('id', $arrIds)));
 
         if (null !== $objModules) {
             while ($objModules->next()) {

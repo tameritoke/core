@@ -99,7 +99,7 @@ class ProductPriceFinder extends \System
         {
             $objResult = \Database::getInstance()->execute("SELECT MIN(price) AS low_price, MAX(price) AS high_price FROM tl_iso_products
                                                             WHERE pid=" . ($objProduct->pid ? $objProduct->pid : $objProduct->id) . " AND language=''"
-                                                            . (BE_USER_LOGGED_IN === true ? '' : " AND published='1' AND (start='' OR start<$time) AND (stop='' OR stop>$time)")
+                                                            . (Isotope::getEnvironment()->canSeeUnpublished() ? '' : " AND published='1' AND (start='' OR start<$time) AND (stop='' OR stop>$time)")
                                                             . " GROUP BY pid");
 
             // Must inherit price from any variant found

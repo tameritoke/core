@@ -1396,7 +1396,7 @@ window.addEvent('domready', function()
 
                 while ($intPage != $intParent)
                 {
-                    $objResult = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?" . (!BE_USER_LOGGED_IN ? " AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND published=1" : ""))->execute($intPage);
+                    $objResult = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?" . (!Isotope::getEnvironment()->canSeeUnpublished() ? " AND (start='' OR start<$time) AND (stop='' OR stop>$time) AND published=1" : ""))->execute($intPage);
 
                     if (!$objResult->numRows)
                     {

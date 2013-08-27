@@ -99,7 +99,7 @@ abstract class Payment extends TypeAgent
      */
     public function isAvailable()
     {
-        if (!$this->enabled && BE_USER_LOGGED_IN !== true)
+        if (!$this->enabled && !Isotope::getEnvironment()->canSeeUnpublished())
         {
             return false;
         }

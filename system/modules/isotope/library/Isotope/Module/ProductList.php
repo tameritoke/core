@@ -70,7 +70,7 @@ class ProductList extends Module
         $this->iso_productcache = deserialize($this->iso_productcache, true);
 
         // Disable the cache in frontend preview or debug mode
-        if (BE_USER_LOGGED_IN === true || $GLOBALS['TL_CONFIG']['debugMode'])
+        if (Isotope::getEnvironment()->canSeeUnpublished() || $GLOBALS['TL_CONFIG']['debugMode'])
         {
             $this->blnCacheProducts = false;
         }
@@ -471,7 +471,7 @@ class ProductList extends Module
             {
                 $time = time();
                 $strWhere = "((" . implode(' AND ', $arrWhere) . ") OR p1.id IN (SELECT pid FROM tl_iso_products WHERE language='' AND " . implode(' AND ', $arrWhere)
-                            . (BE_USER_LOGGED_IN === true ? '' : " AND published='1' AND (start='' OR start<$time) AND (stop='' OR stop>$time)") . "))";
+                            . (Isotope::getEnvironment()->canSeeUnpublished() ? '' : " AND published='1' AND (start='' OR start<$time) AND (stop='' OR stop>$time)") . "))";
                 $arrValues = array_merge($arrValues, $arrValues);
             }
 

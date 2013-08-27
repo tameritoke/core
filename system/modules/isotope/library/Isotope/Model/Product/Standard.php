@@ -617,19 +617,19 @@ class Standard extends Product implements IsotopeProduct
             return true;
         }
 
-        if (BE_USER_LOGGED_IN !== true && !$this->isPublished())
+        if (!Isotope::getEnvironment()->canSeeUnpublished() && !$this->isPublished())
         {
             return false;
         }
 
         // Show to guests only
-        if ($this->arrData['guests'] && Isotope::getEnvironment()->isFrontendLoggedIn() && BE_USER_LOGGED_IN !== true && !$this->arrData['protected'])
+        if ($this->arrData['guests'] && Isotope::getEnvironment()->isFrontendLoggedIn() && !Isotope::getEnvironment()->canSeeUnpublished() && !$this->arrData['protected'])
         {
             return false;
         }
 
         // Protected product
-        if (BE_USER_LOGGED_IN !== true && $this->arrData['protected'])
+        if (!Isotope::getEnvironment()->canSeeUnpublished() && $this->arrData['protected'])
         {
             if (!Isotope::getEnvironment()->isFrontendLoggedIn())
             {
